@@ -77,7 +77,7 @@ export default {
 				</div>
 			</div>
 			<!-- Header links -->
-			<AppHeaderLinks :isOpen="isOpen" />
+			<!-- <AppHeaderLinks :isOpen="isOpen" /> -->
 			<!-- Header right section buttons -->
 			<div
 				class="hidden sm:flex justify-between items-center flex-col md:flex-row"
