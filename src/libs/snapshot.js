@@ -161,7 +161,7 @@ async function getVotingPowers (proposalId, address) {
     return vp;
 }
 
-async function get_active_proposals (space, simple) {
+async function getActiveProposals (space) {
     const url = 'https://hub.snapshot.org/graphql?'
     const data = {
         query: `query Proposals {
@@ -185,30 +185,22 @@ async function get_active_proposals (space, simple) {
     }`
     }
     const res = await axios.post(url, data)
-    if (simple) {
-        return res.data.data.proposals.map(item => {
-            return {
-                id: item.id,
-                title: item.title,
-                type: item.type,
-                choices: item.choices,
-            }
-        })
-    }
-    return res.data.data.proposals
-}
-
-async function vote_on (account, space, choice) {
-    const proposals = await get_active_proposals(space)
-    for (const proposal of proposals) {
-        console.log(`Account: ${account.id} 投票进行中： ${space} - ${proposal.title} - ${proposal.choices[choice - 1]}`);
-        await vote(account, space, proposal.id, choice)
-    }
+    return res.data.data.proposals.map(item => {
+        return {
+            space: space,
+            id: item.id,
+            title: item.title,
+            type: item.type,
+            choices: item.choices,
+            end: item.end,
+            vote: '1', //default to 1st choice
+        }
+    })
 }
 
 module.exports = {
-    vote_on,
     vote,
     hasVoted,
-    getVotingPowers
+    getVotingPowers,
+    getActiveProposals
 }

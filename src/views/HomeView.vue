@@ -45,22 +45,15 @@
       v-if="proposals.length > 0"
       class="mx-auto max-w-4xl mb-10"
     />
-    <KeplrVote
-      :proposals="proposals"
-      :selected="selected"
-      :account="account"
-      @handleResponse="handleResponse"
-      v-if="proposals.length > 0"
-    />
     <AppFooter />
   </div>
 </template>
 <script>
 import { spacesList } from '../config/spaces';
+import { getActiveProposals } from '../libs/snapshot';
 import ProposalsList from '@/components/ProposalsList.vue';
 import AppFooter from '@/components/AppFooter.vue';
 import KeysInput from '@/components/KeysInput.vue';
-import axios from 'axios';
 export default {
   created() {
     for (let space of spacesList) {
@@ -98,43 +91,19 @@ export default {
     },
     async getActiveProposals() {
       this.proposals = [];
-      const url = 'https://hub.snapshot.org/graphql?';
-      const data = {
-        query: `query Proposals {
-      proposals(first: 20, skip: 0, where: {space_in: ["${this.selected}"], state: "active"}, orderBy: "created", orderDirection: desc) {
-        id
-        title
-        body
-        choices
-        start
-        end
-        snapshot
-        state
-        author
-        type
-        app
-        space {
-          id
-          name
+      if (this.selected === 'all') {
+        for (let space of this.spacesList) {
+          let proposals = await getActiveProposals(space.id);
+          if (proposals.length > 0) {
+            for (let proposal of proposals) {
+              this.proposals.push(proposal);
+            }
+          }
         }
+      } else {
+        this.proposals = await getActiveProposals(this.selected);
+        console.log(this.proposals);
       }
-    }`,
-      };
-      const res = await axios.post(url, data);
-      console.log(res.data.data.proposals);
-      let proposals = res.data.data.proposals.map((item) => {
-        return {
-          space: this.selected,
-          id: item.id,
-          title: item.title,
-          type: item.type,
-          choices: item.choices,
-          end: item.end,
-          vote: '0', //default to 1st choice
-        };
-      });
-      this.proposals = proposals;
-      console.log(this.proposals);
     },
   },
   components: { ProposalsList, AppFooter, KeysInput },

@@ -67,7 +67,7 @@
                 <option
                   v-for="(choice, index) in proposal.choices"
                   :key="index"
-                  :value="index"
+                  :value="index+1"
                 >
                   {{ choice }}
                 </option>

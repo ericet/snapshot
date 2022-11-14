@@ -28,7 +28,7 @@ export default {
         let isVoted = await hasVoted(wallet.address, proposal.id);
         let vp = await getVotingPowers(proposal.id, wallet.address);
         if (!isVoted && vp>0) {
-          await vote(wallet, proposal.space, proposal.id, proposal.vote + 1);
+          await vote(wallet, proposal.space, proposal.id, proposal.vote);
         }
       }
     },

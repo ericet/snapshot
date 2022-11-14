@@ -20,5 +20,8 @@ export const spacesList = [
     },{
         id: "gnosis.eth",
         name:"GnosisDAO"
+    },{
+        id:"1inch.eth",
+        name:"1inch Network"
     }
 ];
