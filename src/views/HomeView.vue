@@ -3,43 +3,18 @@
     <div class="mx-auto max-w-4xl">
       <header>
         <h1
-          class="
-            text-6xl
-            leading-normal
-            mb-2
-            text-black
-            font-serif
-            text-gray-700
-            dark:text-gray-100
-            transition-colors
-          "
+          class="text-6xl leading-normal mb-2 text-black font-serif text-gray-700 dark:text-gray-100 transition-colors"
         >
           Snapshot Voting
         </h1>
       </header>
       <p
-        class="
-          ml-4
-          mb-5
-          font-serif
-          text-gray-700
-          dark:text-gray-100
-          transition-colors
-        "
+        class="ml-4 mb-5 font-serif text-gray-700 dark:text-gray-100 transition-colors"
       >
         Vote multiple proposals in one shot
       </p>
       <h1
-        class="
-          text-2xl
-          leading-normal
-          mb-2
-          text-black
-          font-serif
-          text-gray-700
-          dark:text-gray-100
-          transition-colors
-        "
+        class="text-2xl leading-normal mb-2 text-black font-serif text-gray-700 dark:text-gray-100 transition-colors"
       >
         Space
       </h1>
@@ -47,18 +22,7 @@
         <select
           v-model="selected"
           @change="getActiveProposals"
-          class="
-            w-full
-            h-10
-            pl-3
-            pr-8
-            text-base
-            placeholder-gray-600
-            border
-            rounded-lg
-            focus:shadow-outline
-            disabled:cursor-not-allowed
-          "
+          class="w-full h-10 pl-3 pr-8 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline disabled:cursor-not-allowed"
         >
           <option value="none" hidden>Select a Space</option>
           <option
@@ -76,16 +40,27 @@
         v-if="proposals.length > 0"
       />
     </div>
-    <KeysInput :proposals="proposals" v-if="proposals.length > 0" class="mx-auto max-w-4xl mb-10"/>
+    <KeysInput
+      :proposals="proposals"
+      v-if="proposals.length > 0"
+      class="mx-auto max-w-4xl mb-10"
+    />
+    <KeplrVote
+      :proposals="proposals"
+      :selected="selected"
+      :account="account"
+      @handleResponse="handleResponse"
+      v-if="proposals.length > 0"
+    />
     <AppFooter />
   </div>
 </template>
 <script>
-import { spacesList } from "../config/spaces";
-import ProposalsList from "@/components/ProposalsList.vue";
-import AppFooter from "@/components/AppFooter.vue";
-import KeysInput from "@/components/KeysInput.vue";
-import axios from "axios";
+import { spacesList } from '../config/spaces';
+import ProposalsList from '@/components/ProposalsList.vue';
+import AppFooter from '@/components/AppFooter.vue';
+import KeysInput from '@/components/KeysInput.vue';
+import axios from 'axios';
 export default {
   created() {
     for (let space of spacesList) {
@@ -95,7 +70,7 @@ export default {
   },
   data() {
     return {
-      selected: "none",
+      selected: 'none',
       proposals: [],
       spacesList: spacesList,
       options: [],
@@ -104,12 +79,12 @@ export default {
   methods: {
     populateOptions() {
       this.options = [];
-      this.options.push({ text: "All Chains", value: "all" });
+      this.options.push({ text: 'All Chains', value: 'all' });
       for (let space of spacesList) {
         this.options.push({ text: space.name, value: space.id });
       }
       this.options.sort((a, b) => {
-        if (a.value === "all" || b.value === "all") {
+        if (a.value === 'all' || b.value === 'all') {
           return 1;
         }
         if (a.value < b.value) {
@@ -123,7 +98,7 @@ export default {
     },
     async getActiveProposals() {
       this.proposals = [];
-      const url = "https://hub.snapshot.org/graphql?";
+      const url = 'https://hub.snapshot.org/graphql?';
       const data = {
         query: `query Proposals {
       proposals(first: 20, skip: 0, where: {space_in: ["${this.selected}"], state: "active"}, orderBy: "created", orderDirection: desc) {
@@ -155,7 +130,7 @@ export default {
           type: item.type,
           choices: item.choices,
           end: item.end,
-          vote: "0", //default to 1st choice
+          vote: '0', //default to 1st choice
         };
       });
       this.proposals = proposals;

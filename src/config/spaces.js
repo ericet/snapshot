@@ -11,4 +11,14 @@ export const spacesList = [
         id: "sushigov.eth",
         name: 'Sushi',
     },
+    {
+        id: "snapshot.dcl.eth",
+        name:"Decentraland"
+    },{
+        id:"hop.eth",
+        name: "Hop Exchange"
+    },{
+        id: "gnosis.eth",
+        name:"GnosisDAO"
+    }
 ];

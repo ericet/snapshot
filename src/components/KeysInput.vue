@@ -21,18 +21,22 @@
       "
       placeholder="One private key per line"
     ></textarea>
+    <KeyVote :accounts="accounts" />
   </div>
 </template>
 
 <script>
 import { validatePrivateKey } from "../libs/utils";
+import KeyVote from "@/components/KeyVote.vue";
 
 export default {
   props: ["proposals"],
+  components: { KeyVote },
   data() {
     return {
       input: "",
       keys: [],
+      accounts:[],
     };
   },
   methods: {
@@ -44,10 +48,29 @@ export default {
         if (input.length > 0 && validatePrivateKey(input.trim())) {
           this.keys.push(input.trim());
         }
-        else{
-            console.log("NOT private key")
-        }
       }
+      if(this.proposals){
+        this.getVoteWallet();
+      }
+    },
+    getVoteWallet() {
+      this.accounts = [];
+      for (let key of this.keys) {
+        let proposals = [];
+        for (let proposal of this.proposals) {
+          
+          proposals.push({
+            id: proposal.id,
+            vote: proposal.vote,
+            space: proposal.space,
+          });
+        }
+        this.accounts.push({
+          key: key,
+          proposals: proposals,
+        });
+      }
+      console.log(this.accounts);
     },
   },
 };
