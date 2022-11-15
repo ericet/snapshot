@@ -45,6 +45,7 @@
       v-if="proposals.length > 0"
       class="mx-auto max-w-4xl mb-10"
     />
+
     <AppFooter />
   </div>
 </template>
@@ -77,13 +78,13 @@ export default {
         this.options.push({ text: space.name, value: space.id });
       }
       this.options.sort((a, b) => {
-        if (a.value === 'all' || b.value === 'all') {
+        if (a.text === 'All Chains' || b.text === 'All Chains') {
           return 1;
         }
-        if (a.value < b.value) {
+        if (a.text < b.text) {
           return -1;
         }
-        if (a.value > b.value) {
+        if (a.text > b.text) {
           return 1;
         }
         return 0;
@@ -102,7 +103,6 @@ export default {
         }
       } else {
         this.proposals = await getActiveProposals(this.selected);
-        console.log(this.proposals);
       }
     },
   },

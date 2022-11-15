@@ -23,5 +23,8 @@ export const spacesList = [
     },{
         id:"1inch.eth",
         name:"1inch Network"
+    },{
+        id:"plutusclub.eth",
+        name:"test"
     }
 ];

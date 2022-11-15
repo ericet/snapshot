@@ -4,13 +4,13 @@ const axios = require("axios")
 
 const provider = new ethers.providers.JsonRpcProvider("https://rpc.ankr.com/eth")
 
-async function get_signature (account, signData, provider) {
+async function get_signature(account, signData, provider) {
     const { domain, types, message } = signData.data
     const signer = new ethers.Wallet(account.privateKey, provider)
     return await signer._signTypedData(domain, types, message)
 }
 
-async function send_vote_request (data) {
+async function send_vote_request(data) {
     const config = {
         method: 'post',
         url: 'https://hub.snapshot.org/api/msg',
@@ -31,18 +31,22 @@ async function send_vote_request (data) {
         },
         data: JSON.stringify(data)
     };
-
+    let response={};
     try {
         const res = await axios(config)
         if (res.data.id) {
-            console.log(`${data.address} 投票成功`);
+            response.status_code = "success";
+            response.status_message = "Successfully voted!"
+            return response;
         }
     } catch (error) {
-        console.log(`${data.address} 投票失败`, JSON.stringify(error.response.data));
+        response.status_code = "error";
+        response.status_message = "Vote Failed: " + error.response.data;
+        return response;
     }
 }
 
-async function vote (account, space, proposal, choice) {
+async function vote(account, proposal) {
     const checksum_address = web3.utils.toChecksumAddress(account.address)
     const data = {
         "address": checksum_address,
@@ -84,9 +88,9 @@ async function vote (account, space, proposal, choice) {
                 ]
             },
             "message": {
-                "space": space,
-                "proposal": proposal,
-                "choice": Number(choice),
+                "space": proposal.space,
+                "proposal": proposal.id,
+                "choice": Number(proposal.vote),
                 "app": "snapshot",
                 "reason": "",
                 "from": checksum_address,
@@ -95,9 +99,11 @@ async function vote (account, space, proposal, choice) {
         }
     }
     data.sig = await get_signature(account, data, provider)
-    await send_vote_request(data)
+    let res = await send_vote_request(data);
+    proposal.status_code = res.status_code;
+    proposal.status_message = res.status_message;
 }
-async function hasVoted (address, proposalId) {
+async function hasVoted(address, proposalId) {
     const url = 'https://hub.snapshot.org/graphql';
     const data = {
         query: `query Votes {
@@ -124,7 +130,7 @@ async function hasVoted (address, proposalId) {
     return res.data.data.votes.length > 0;
 }
 
-async function getProposal (proposalId) {
+async function getProposal(proposalId) {
     const response = await fetch('https://hub.snapshot.org/graphql', {
         method: 'POST',
         headers: {
@@ -137,7 +143,7 @@ async function getProposal (proposalId) {
 }
 
 
-async function getVotingPowers (proposalId, address) {
+async function getVotingPowers(proposalId, address) {
     const proposal = await getProposal(proposalId);
     const response = await fetch('https://score.snapshot.org', {
         method: 'POST',
@@ -161,7 +167,7 @@ async function getVotingPowers (proposalId, address) {
     return vp;
 }
 
-async function getActiveProposals (space) {
+async function getActiveProposals(space) {
     const url = 'https://hub.snapshot.org/graphql?'
     const data = {
         query: `query Proposals {

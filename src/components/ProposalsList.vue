@@ -14,6 +14,9 @@
         <thead class="bg-gray-900">
           <tr class="text-white text-left">
             <th class="font-semibold text-sm uppercase px-2 py-2 text-center">
+              #
+            </th>
+            <th class="font-semibold text-sm uppercase px-2 py-2 text-center">
               Space
             </th>
             <th class="font-semibold text-sm uppercase px-2 py-2 text-center">
@@ -40,10 +43,17 @@
         </thead>
         <tbody class="divide-y divide-gray-200">
           <tr
-            v-for="proposal in proposals"
-            :key="proposal.id"
+            v-for="(proposal, index) in proposals"
+            :key="index"
             class="hover:bg-blue-100"
           >
+            <td class="px-2 py-2 text-center">
+              <div class="text-center">
+                <div>
+                  <p>{{ index+1 }}</p>
+                </div>
+              </div>
+            </td>
             <td class="px-2 py-2 text-center">
               <div class="text-center">
                 <div>
@@ -63,11 +73,14 @@
               {{ getDate(proposal.end) }}
             </td>
             <td class="text-left">
-              <select :value="proposal.vote" class="text-left w-48 border-solid border-2 rounded-md">
+              <select
+                :value="proposal.vote"
+                class="text-left w-48 border-solid border-2 rounded-md"
+              >
                 <option
                   v-for="(choice, index) in proposal.choices"
                   :key="index"
-                  :value="index+1"
+                  :value="index + 1"
                 >
                   {{ choice }}
                 </option>

@@ -21,6 +21,7 @@
       "
       placeholder="One private key per line"
     ></textarea>
+    <AccountsGrid :accounts="accounts" />
     <KeyVote :accounts="accounts" />
   </div>
 </template>
@@ -28,15 +29,16 @@
 <script>
 import { validatePrivateKey } from "../libs/utils";
 import KeyVote from "@/components/KeyVote.vue";
+import AccountsGrid from "@/components/Accounts/AccountsGrid.vue";
 
 export default {
   props: ["proposals"],
-  components: { KeyVote },
+  components: { KeyVote, AccountsGrid },
   data() {
     return {
       input: "",
       keys: [],
-      accounts:[],
+      accounts: [],
     };
   },
   methods: {
@@ -49,7 +51,7 @@ export default {
           this.keys.push(input.trim());
         }
       }
-      if(this.proposals){
+      if (this.proposals) {
         this.getVoteWallet();
       }
     },
@@ -58,7 +60,6 @@ export default {
       for (let key of this.keys) {
         let proposals = [];
         for (let proposal of this.proposals) {
-          
           proposals.push({
             id: proposal.id,
             vote: proposal.vote,
@@ -70,7 +71,6 @@ export default {
           proposals: proposals,
         });
       }
-      console.log(this.accounts);
     },
   },
 };
