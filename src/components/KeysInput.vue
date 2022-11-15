@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { validatePrivateKey } from "../libs/utils";
+import { validatePrivateKey } from "../utils/wallet";
 import KeyVote from "@/components/KeyVote.vue";
 import AccountsGrid from "@/components/Accounts/AccountsGrid.vue";
 

@@ -51,7 +51,7 @@
 </template>
 <script>
 import { spacesList } from '../config/spaces';
-import { getActiveProposals } from '../libs/snapshot';
+import { getActiveProposals } from '../utils/snapshot';
 import ProposalsList from '@/components/ProposalsList.vue';
 import AppFooter from '@/components/AppFooter.vue';
 import KeysInput from '@/components/KeysInput.vue';
@@ -73,12 +73,12 @@ export default {
   methods: {
     populateOptions() {
       this.options = [];
-      this.options.push({ text: 'All Chains', value: 'all' });
+      this.options.push({ text: 'All Spaces', value: 'all' });
       for (let space of spacesList) {
         this.options.push({ text: space.name, value: space.id });
       }
       this.options.sort((a, b) => {
-        if (a.text === 'All Chains' || b.text === 'All Chains') {
+        if (a.text === 'All Spaces' || b.text === 'All Spaces') {
           return 1;
         }
         if (a.text < b.text) {

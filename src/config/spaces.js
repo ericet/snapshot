@@ -62,5 +62,9 @@ export const spacesList = [
     {
         id: "sismo.eth",
         name: "Sismo"
-    }
+    },
+    // {
+    //     id:"plutusclub.eth",
+    //     name:"Test"
+    // }
 ];

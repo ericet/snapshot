@@ -27,8 +27,8 @@
   </div>
 </template>
 <script>
-import { getWallet } from "../libs/wallet";
-import { hasVoted, vote, getVotingPowers } from "../libs/snapshot";
+import { getWallet } from "../utils/wallet";
+import { hasVoted, vote, getVotingPowers } from "../utils/snapshot";
 export default {
   props: ["accounts"],
   methods: {
