@@ -1,9 +1,5 @@
 export const spacesList = [
     {
-        id: "cakevote.eth",
-        name: 'PancakeSwap',
-    },
-    {
         id: "uniswap",
         name: 'Uniswap',
     },
@@ -12,19 +8,59 @@ export const spacesList = [
         name: 'Sushi',
     },
     {
-        id: "snapshot.dcl.eth",
-        name:"Decentraland"
-    },{
-        id:"hop.eth",
+        id: "hop.eth",
         name: "Hop Exchange"
-    },{
+    },
+    {
         id: "gnosis.eth",
-        name:"GnosisDAO"
-    },{
-        id:"1inch.eth",
-        name:"1inch Network"
-    },{
-        id:"plutusclub.eth",
-        name:"test"
+        name: "GnosisDAO"
+    },
+    {
+        id: "1inch.eth",
+        name: "1inch Network"
+    },
+    {
+        id: "gitcoindao.eth",
+        name: "Gitcoin"
+    },
+    {
+        id: "ens.eth",
+        name: "ENS"
+    },
+    {
+        id: "aave.eth",
+        name: "AAVE"
+    },
+    {
+        id: "stgdao.eth",
+        name: "Stargate DAO"
+    },
+    {
+        id: "arbitrum-odyssey.eth",
+        name: "Arbitrum Odyssey"
+    },
+    {
+        id: "opcollective.eth",
+        name: "Optimism Collective"
+    },
+    {
+        id: "curve.eth",
+        name: "Curve Finance"
+    },
+    {
+        id: "shellprotocol.eth",
+        name: "Shell Protocol"
+    },
+    {
+        id: "dydxgov.eth",
+        name: "dYdX"
+    },
+    {
+        id: "balancer.eth",
+        name: "Balancer"
+    },
+    {
+        id: "sismo.eth",
+        name: "Sismo"
     }
 ];
