@@ -50,7 +50,7 @@
             <td class="px-2 py-2 text-center">
               <div class="text-center">
                 <div>
-                  <p>{{ index+1 }}</p>
+                  <p>{{ index + 1 }}</p>
                 </div>
               </div>
             </td>
@@ -76,6 +76,7 @@
               <select
                 :value="proposal.vote"
                 class="text-left w-48 border-solid border-2 rounded-md"
+                @change.stop="change($event.target.value, proposal)"
               >
                 <option
                   v-for="(choice, index) in proposal.choices"
@@ -109,7 +110,7 @@ export default {
     },
     getSpace(id) {
       return this.$store.state.spaceMap.get(id).name;
-    },
+    }
   },
 };
 </script>

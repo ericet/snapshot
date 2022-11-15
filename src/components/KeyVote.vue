@@ -46,18 +46,16 @@ export default {
         if (isVoted) {
           proposal.status_code = "voted";
           proposal.status_message = "This proposal has already Voted";
-          return;
-        }
-        let vp = await getVotingPowers(proposal.id, wallet.address);
-        if (vp == 0) {
-          proposal.status_code = "error";
-          proposal.status_message = "You don't have Voting Power to vote";
-          return;
-        }
-        if (!isVoted && vp > 0) {
-          proposal.status_code = "ready";
-          proposal.status_message = "Ready to vote";
-          await vote(wallet, proposal);
+        } else {
+          let vp = await getVotingPowers(proposal.id, wallet.address);
+          if (vp == 0) {
+            proposal.status_code = "error";
+            proposal.status_message = "You don't have Voting Power to vote";
+          } else {
+            proposal.status_code = "ready";
+            proposal.status_message = "Ready to vote";
+            await vote(wallet, proposal);
+          }
         }
       }
     },
