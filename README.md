@@ -32,4 +32,8 @@ https://ericet.github.io/snapshot/
   * Cosmos: cosmos1q23hjqp3fv3v2fjxp3zvknelx53qfc4v6uzq6w
 * Stake with My Validator "ericet" on Evmos, Rebus, Stride, Canto, Likecoin, Desmos, etc
 
+
 # P.S: Use the tool at your own risk. 
+
+## A Special Thanks to liangfenxiaodao(刀哥), got ideas from his open source project: https://github.com/liangfenxiaodao/snapshot-voting
+
