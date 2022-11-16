@@ -3,18 +3,43 @@
     <div class="mx-auto max-w-4xl">
       <header>
         <h1
-          class="text-6xl leading-normal mb-2 text-black font-serif text-gray-700 dark:text-gray-100 transition-colors"
+          class="
+            text-6xl
+            leading-normal
+            mb-2
+            text-black
+            font-serif
+            text-gray-700
+            dark:text-gray-100
+            transition-colors
+          "
         >
           Snapshot Voting
         </h1>
       </header>
       <p
-        class="ml-4 mb-5 font-serif text-gray-700 dark:text-gray-100 transition-colors"
+        class="
+          ml-4
+          mb-5
+          font-serif
+          text-gray-700
+          dark:text-gray-100
+          transition-colors
+        "
       >
         Vote multiple proposals in one shot
       </p>
       <h1
-        class="text-2xl leading-normal mb-2 text-black font-serif text-gray-700 dark:text-gray-100 transition-colors"
+        class="
+          text-2xl
+          leading-normal
+          mb-2
+          text-black
+          font-serif
+          text-gray-700
+          dark:text-gray-100
+          transition-colors
+        "
       >
         Space
       </h1>
@@ -22,7 +47,18 @@
         <select
           v-model="selected"
           @change="getActiveProposals"
-          class="w-full h-10 pl-3 pr-8 text-base placeholder-gray-600 border rounded-lg focus:shadow-outline disabled:cursor-not-allowed"
+          class="
+            w-full
+            h-10
+            pl-3
+            pr-8
+            text-base
+            placeholder-gray-600
+            border
+            rounded-lg
+            focus:shadow-outline
+            disabled:cursor-not-allowed
+          "
         >
           <option value="none" hidden>Select a Space</option>
           <option
@@ -33,6 +69,58 @@
             {{ option.text }}
           </option>
         </select>
+        <label
+          for="default-toggle"
+          class="
+            inline-flex
+            relative
+            items-center
+            mb-4
+            cursor-pointer
+            mt-2
+            ml-2
+          "
+        >
+          <input
+            type="checkbox"
+            v-model="useMetamask"
+            true-value="true"
+            false-value="false"
+            id="default-toggle"
+            class="sr-only peer"
+            @change="toggle"
+          />
+          <div
+            class="
+              w-11
+              h-6
+              bg-gray-200
+              rounded-full
+              peer
+              peer-focus:ring-4 peer-focus:ring-blue-300
+              dark:peer-focus:ring-blue-800 dark:bg-gray-700
+              peer-checked:after:translate-x-full
+              peer-checked:after:border-white
+              after:content-['']
+              after:absolute
+              after:top-0.5
+              after:left-[2px]
+              after:bg-white
+              after:border-gray-300
+              after:border
+              after:rounded-full
+              after:h-5
+              after:w-5
+              after:transition-all
+              dark:border-gray-600
+              peer-checked:bg-blue-600
+            "
+          ></div>
+          <span
+            class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >Use MetaMask</span
+          >
+        </label>
       </div>
       <ProposalsList
         :proposals="proposals"
@@ -41,7 +129,18 @@
       />
       <div
         v-if="proposals.length == 0 && ready"
-        class="mx-auto max-w-4xl mb-5 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+        class="
+          mx-auto
+          max-w-4xl
+          mb-5
+          bg-red-100
+          border border-red-400
+          text-red-700
+          px-4
+          py-3
+          rounded
+          relative
+        "
         role="alert"
       >
         <span class="block sm:inline"
@@ -64,7 +163,7 @@
     </div>
     <KeysInput
       :proposals="proposals"
-      v-if="proposals.length > 0"
+      v-if="proposals.length > 0  && (useMetamask === 'false' || useMetamask === false)"
       class="mx-auto max-w-4xl mb-10"
     />
 
@@ -72,12 +171,23 @@
   </div>
 </template>
 <script>
-import { spacesList } from '../config/spaces';
-import { getActiveProposals } from '../utils/snapshot';
-import ProposalsList from '@/components/ProposalsList.vue';
-import AppFooter from '@/components/AppFooter.vue';
-import KeysInput from '@/components/KeysInput.vue';
+import { spacesList } from "../config/spaces";
+import { getActiveProposals } from "../utils/snapshot";
+import ProposalsList from "@/components/ProposalsList.vue";
+import AppFooter from "@/components/AppFooter.vue";
+import KeysInput from "@/components/KeysInput.vue";
 export default {
+  mounted() {
+    if (window.ethereum) {
+      window.addEventListener('accountsChanged', () => {
+        this.proposals = [];
+        this.selected = 'none';
+        this.ready = false;
+        this.response = {};
+        this.populateOptions();
+      });
+    }
+  },
   created() {
     for (let space of spacesList) {
       this.$store.state.spaceMap.set(space.id, space);
@@ -86,25 +196,33 @@ export default {
   },
   data() {
     return {
-      selected: 'none',
+      selected: "none",
       proposals: [],
       spacesList: spacesList,
       options: [],
       ready: false,
+      useMetamask: false,
     };
   },
   methods: {
     close() {
       this.response = {};
     },
+    toggle() {
+      this.response = {};
+      this.proposals = [];
+      this.selected = 'none';
+      this.ready = false;
+      this.populateOptions();
+    },
     populateOptions() {
       this.options = [];
-      this.options.push({ text: 'All Spaces', value: 'all' });
+      this.options.push({ text: "All Spaces", value: "all" });
       for (let space of spacesList) {
         this.options.push({ text: space.name, value: space.id });
       }
       this.options.sort((a, b) => {
-        if (a.text === 'All Spaces' || b.text === 'All Spaces') {
+        if (a.text === "All Spaces" || b.text === "All Spaces") {
           return 1;
         }
         if (a.text < b.text) {
@@ -119,7 +237,7 @@ export default {
     async getActiveProposals() {
       this.ready = false;
       this.proposals = [];
-      if (this.selected === 'all') {
+      if (this.selected === "all") {
         for (let space of this.spacesList) {
           let proposals = await getActiveProposals(space.id);
           if (proposals.length > 0) {
