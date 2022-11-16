@@ -1,30 +1,22 @@
-# Vuejs & TailwindCSS Starter Template - With Dark Mode
+# Snapshot Voting
 
-A simple vue3 & TailwindCSS starter template
+Vote multiple EVM propsals in one single shot. 
 
-## Light Mode:
+Spaces currently supported: Uniswap, Sushi, Hop, Gnosis, 1inch, Gitcoin, ENS, AAVE, Stargate DAO, Arbitrum Odyssey, Optimism, Curve, Shell Protocol, dYdX, Balancer, Simo
 
-![image.png](https://cdn.steemitimages.com/DQmax3TPXGVC5ym76Gi42dc8p8V9EWBznMPa5fUPyyeaTL2/image.png)
-
-## Dark Mode:
-![image.png](https://cdn.steemitimages.com/DQmcPPxpk8hkjviW4y8RiJYRQKXFPpkZQ2XdhuLDw9ZrvoG/image.png)
+Use Private Key to vote
 
 ## Demo URL
-https://ericet.github.io/vue3-starter-template
-
-## Features
-* Vuejs V3 with Vue Router & Vuex
-* Tailwind CSS 
-* Theme Switcher with Dark Mode
+https://ericet.github.io/snapshot/
 
 ## Installation
 1. Clone the repo:
 
-`git clone https://github.com/ericet/vue3-starter-template.git`
+`git clone https://github.com/ericet/snapshot.git`
 
 2. Open the folder
 
-`cd vue3-starter-template`
+`cd snapshot`
 
 3. Install packages and dependencies
 
@@ -33,3 +25,11 @@ https://ericet.github.io/vue3-starter-template
 4. Start the dev server
 
 `npm run serve`
+
+## Support My Works
+* Donations:
+  * ETH/BNB/XDAI: 0x434DCffCF7dABd48B284860C27ebd184C91341F5
+  * Cosmos: cosmos1q23hjqp3fv3v2fjxp3zvknelx53qfc4v6uzq6w
+* Stake with My Validator "ericet" on Evmos, Rebus, Stride, Canto, Likecoin, Desmos, etc
+
+# P.S: Use the tool at your own risk. 
