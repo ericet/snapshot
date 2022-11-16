@@ -6,7 +6,7 @@
     <div class="font-general-semibold text-sm text-ternary-dark dark:text-ternary-light font-semibold mb-4"
       v-for="(proposal, index) in proposals" :key="index">
       <div class="flex justify-between items-center mx-2">
-       {{proposal.space}}:【{{ index+1 }}】
+       {{getSpace(proposal.space)}}:【{{ index+1 }}】
         <span v-if="proposal.status_code == 'ready'">
           <div class="group relative ">
             <i data-feather="clock"
@@ -54,6 +54,11 @@ export default {
   props: ['proposals', 'number'],
   mounted() {
     feather.replace();
+  },
+  methods:{
+    getSpace(id) {
+      return this.$store.state.spaceMap.get(id).name;
+    }
   },
   updated() {
     feather.replace();

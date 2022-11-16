@@ -33,10 +33,19 @@ export default {
   props: ["accounts"],
   methods: {
     async vote() {
+      this.clearVoteStatus();
       for (let ac of this.accounts) {
         let key = ac.key;
         let proposals = ac.proposals;
         this.startVoting(key, proposals);
+      }
+    },
+    clearVoteStatus() {
+      for (let account of this.accounts) {
+        for (let proposal of account.proposals) {
+          proposal.status_code = '';
+          proposal.status_message = '';
+        }
       }
     },
     async startVoting(key, proposals) {

@@ -22,7 +22,7 @@
       placeholder="One private key per line"
     ></textarea>
     <AccountsGrid :accounts="accounts" />
-    <KeyVote :accounts="accounts" />
+    <KeyVote :accounts="accounts" v-if="accounts.length>0"/>
   </div>
 </template>
 
