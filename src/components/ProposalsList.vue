@@ -64,7 +64,11 @@
             <td class="px-2 py-2 text-center">
               <div class="text-center">
                 <div>
-                  <p>{{ proposal.title }}</p>
+                  <a target="_blank"
+                    :href="`https://snapshot.org/#/${proposal.space}/proposal/${proposal.id}`" 
+                  >
+                    {{ proposal.title }}
+                  </a>
                 </div>
               </div>
             </td>
@@ -110,7 +114,7 @@ export default {
     },
     getSpace(id) {
       return this.$store.state.spaceMap.get(id).name;
-    }
+    },
   },
 };
 </script>
