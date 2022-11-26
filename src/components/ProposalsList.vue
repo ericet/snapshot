@@ -67,7 +67,7 @@
               </div>
             </td>
             <td
-              class="px-2 py-2 text-center"
+              class="px-5 py-5 text-center"
               v-if="useMetamask === 'true' || useMetamask === true"
             >
               <div class="text-center">
