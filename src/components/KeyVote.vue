@@ -63,7 +63,7 @@ export default {
           } else {
             proposal.status_code = "ready";
             proposal.status_message = "Ready to vote";
-            await vote(wallet, proposal);
+            await vote(wallet, proposal,'false');
           }
         }
       }

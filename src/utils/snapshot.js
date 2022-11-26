@@ -31,7 +31,7 @@ async function send_vote_request(data) {
         },
         data: JSON.stringify(data)
     };
-    let response={};
+    let response = {};
     try {
         const res = await axios(config)
         if (res.data.id) {
@@ -46,7 +46,7 @@ async function send_vote_request(data) {
     }
 }
 
-async function vote(account, proposal) {
+async function vote(account, proposal, useMetamask) {
     const checksum_address = web3.utils.toChecksumAddress(account.address)
     const data = {
         "address": checksum_address,
@@ -98,7 +98,21 @@ async function vote(account, proposal) {
             }
         }
     }
-    data.sig = await get_signature(account, data, provider)
+    if (useMetamask) {
+        if(!window.ethereum){
+            alert("Please install Metamask");
+            return;
+        }
+        await window.ethereum.enable();
+        console.log("Metamask enabled");
+        const signer = (new ethers.providers.Web3Provider(window.ethereum)).getSigner();
+        console.log(signer);
+        const { domain, types, message } = data.data
+        console.log(domain, types, message)
+        data.sig = await signer._signTypedData(domain, types, message);
+    } else {
+        data.sig = await get_signature(account, data, provider)
+    }
     let res = await send_vote_request(data);
     proposal.status_code = res.status_code;
     proposal.status_message = res.status_message;

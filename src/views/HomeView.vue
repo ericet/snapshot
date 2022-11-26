@@ -163,7 +163,18 @@
     </div>
     <KeysInput
       :proposals="proposals"
-      v-if="proposals.length > 0  && (useMetamask === 'false' || useMetamask === false)"
+      v-if="
+        proposals.length > 0 &&
+        (useMetamask === 'false' || useMetamask === false)
+      "
+      class="mx-auto max-w-4xl mb-10"
+    />
+
+    <MetamaskVote
+      :proposals="proposals"
+      v-if="
+        proposals.length > 0 && (useMetamask === 'true' || useMetamask === true)
+      "
       class="mx-auto max-w-4xl mb-10"
     />
 
@@ -176,12 +187,15 @@ import { getActiveProposals } from "../utils/snapshot";
 import ProposalsList from "@/components/ProposalsList.vue";
 import AppFooter from "@/components/AppFooter.vue";
 import KeysInput from "@/components/KeysInput.vue";
+import MetamaskVote from "@/components/MetamaskVote.vue";
+import AccountSingle from "@/components/Accounts/AccountSingle.vue";
+
 export default {
   mounted() {
     if (window.ethereum) {
-      window.addEventListener('accountsChanged', () => {
+      window.addEventListener("accountsChanged", () => {
         this.proposals = [];
-        this.selected = 'none';
+        this.selected = "none";
         this.ready = false;
         this.response = {};
         this.populateOptions();
@@ -208,10 +222,10 @@ export default {
     close() {
       this.response = {};
     },
-    toggle() {
+    async toggle() {
       this.response = {};
       this.proposals = [];
-      this.selected = 'none';
+      this.selected = "none";
       this.ready = false;
       this.populateOptions();
     },
@@ -252,6 +266,12 @@ export default {
       this.ready = true;
     },
   },
-  components: { ProposalsList, AppFooter, KeysInput },
+  components: {
+    ProposalsList,
+    AppFooter,
+    KeysInput,
+    MetamaskVote,
+    AccountSingle,
+  },
 };
 </script>

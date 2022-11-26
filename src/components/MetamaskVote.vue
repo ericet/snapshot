@@ -11,7 +11,7 @@
 </template>
 <script>
 export default {
-  props: ['proposals', 'account'],
+  props: ['proposals'],
   methods: {
     async handleVote() {},
   },
