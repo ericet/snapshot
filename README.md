@@ -9,6 +9,9 @@ Use Private Key to vote
 ## Demo URL
 https://ericet.github.io/snapshot/
 
+![image](https://user-images.githubusercontent.com/9066755/204068475-a714017f-6b9b-42c9-9a73-431525d2f41e.png)
+
+
 ## Installation
 1. Clone the repo:
 
