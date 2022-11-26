@@ -124,6 +124,7 @@
       </div>
       <ProposalsList
         :proposals="proposals"
+        :useMetamask="useMetamask"
         class="mx-auto max-w-4xl"
         v-if="proposals.length > 0"
       />
@@ -177,7 +178,6 @@
       "
       class="mx-auto max-w-4xl mb-10"
     />
-
     <AppFooter />
   </div>
 </template>
