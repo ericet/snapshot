@@ -4,12 +4,13 @@ Vote multiple EVM propsals in one single shot.
 
 Spaces currently supported: Uniswap, Sushi, Hop, Gnosis, 1inch, Gitcoin, ENS, AAVE, Stargate DAO, Arbitrum Odyssey, Optimism, Curve, Shell Protocol, dYdX, Balancer, Simo
 
-Use Private Key to vote
+Use Private Key/Metamsk to vote
 
 ## Demo URL
 https://ericet.github.io/snapshot/
 
 ![image](https://user-images.githubusercontent.com/9066755/204068475-a714017f-6b9b-42c9-9a73-431525d2f41e.png)
+![image](https://user-images.githubusercontent.com/9066755/204118284-6eaceb50-b2f9-48c0-82b7-b3b3db17239b.png)
 
 
 ## Installation
