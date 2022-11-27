@@ -45,6 +45,8 @@ export default {
     async startVoting(proposals) {
       let provider = new ethers.providers.Web3Provider(window.ethereum);
       const accounts = await provider.send("eth_requestAccounts");
+      let previousSpace = "";
+      let voted = false;
       let wallet = {};
       wallet.address = accounts[0];
       for (let proposal of proposals) {
@@ -53,14 +55,21 @@ export default {
           proposal.status_code = "voted";
           proposal.status_message = "This proposal has already Voted";
         } else {
-          let vp = await getVotingPowers(proposal.id, wallet.address);
-          if (vp == 0) {
+          if (previousSpace !== proposal.space || voted) {
+            let vp = await getVotingPowers(proposal.id, wallet.address);
+            previousSpace = proposal.space;
+            if (vp == 0) {
+              proposal.status_code = "error";
+              proposal.status_message = "You don't have Voting Power to vote";
+            } else {
+              proposal.status_code = "ready";
+              proposal.status_message = "Ready to vote";
+              await vote(wallet, proposal, "true");
+              voted = true;
+            }
+          } else {
             proposal.status_code = "error";
             proposal.status_message = "You don't have Voting Power to vote";
-          } else {
-            proposal.status_code = "ready";
-            proposal.status_message = "Ready to vote";
-            await vote(wallet, proposal, "true");
           }
         }
       }

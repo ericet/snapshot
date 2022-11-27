@@ -98,17 +98,14 @@ async function vote(account, proposal, useMetamask) {
             }
         }
     }
-    if (useMetamask) {
+    if (useMetamask==='true' || useMetamask===true) {
         if(!window.ethereum){
             alert("Please install Metamask");
             return;
         }
         await window.ethereum.enable();
-        console.log("Metamask enabled");
         const signer = (new ethers.providers.Web3Provider(window.ethereum)).getSigner();
-        console.log(signer);
         const { domain, types, message } = data.data
-        console.log(domain, types, message)
         data.sig = await signer._signTypedData(domain, types, message);
     } else {
         data.sig = await get_signature(account, data, provider)

@@ -118,9 +118,15 @@
           ></div>
           <span
             class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >Use MetaMask</span
+            >Use MetaMask
+            </span
           >
+          <ConnectAccount
+          :address="address" class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+          v-if="address.length > 0"
+        />
         </label>
+        
       </div>
       <ProposalsList
         :proposals="proposals"
@@ -184,21 +190,23 @@
 <script>
 import { spacesList } from "../config/spaces";
 import { getActiveProposals } from "../utils/snapshot";
+import { getAddress } from "../utils/wallet";
 import ProposalsList from "@/components/ProposalsList.vue";
 import AppFooter from "@/components/AppFooter.vue";
 import KeysInput from "@/components/KeysInput.vue";
 import MetamaskVote from "@/components/MetamaskVote.vue";
 import AccountSingle from "@/components/Accounts/AccountSingle.vue";
-
+import ConnectAccount from "@/components/ConnectAccount.vue";
 export default {
   mounted() {
     if (window.ethereum) {
-      window.addEventListener("accountsChanged", () => {
+      window.ethereum.on("accountsChanged", () => {
         this.proposals = [];
         this.selected = "none";
         this.ready = false;
         this.response = {};
         this.populateOptions();
+        this.updateAddress(this.useMetamask);
       });
     }
   },
@@ -207,6 +215,7 @@ export default {
       this.$store.state.spaceMap.set(space.id, space);
     }
     this.populateOptions();
+    this.updateAddress(this.useMetamask);
   },
   data() {
     return {
@@ -216,6 +225,7 @@ export default {
       options: [],
       ready: false,
       useMetamask: false,
+      address: "",
     };
   },
   methods: {
@@ -223,11 +233,11 @@ export default {
       this.response = {};
     },
     async toggle() {
-      this.response = {};
-      this.proposals = [];
-      this.selected = "none";
-      this.ready = false;
       this.populateOptions();
+      this.updateAddress(this.useMetamask);
+    },
+    async updateAddress() {
+      this.address = await getAddress(this.useMetamask);
     },
     populateOptions() {
       this.options = [];
@@ -272,6 +282,7 @@ export default {
     KeysInput,
     MetamaskVote,
     AccountSingle,
+    ConnectAccount,
   },
 };
 </script>
