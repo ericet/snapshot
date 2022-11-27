@@ -67,8 +67,8 @@ export const spacesList = [
         id: "layer2dao.org",
         name: "Layer2 DAO"
     },
-    {
-        id:"plutusclub.eth",
-        name:"Test"
-    }
+    // {
+    //     id:"plutusclub.eth",
+    //     name:"Test"
+    // }
 ];
