@@ -195,7 +195,6 @@ import ProposalsList from "@/components/ProposalsList.vue";
 import AppFooter from "@/components/AppFooter.vue";
 import KeysInput from "@/components/KeysInput.vue";
 import MetamaskVote from "@/components/MetamaskVote.vue";
-import AccountSingle from "@/components/Accounts/AccountSingle.vue";
 import ConnectAccount from "@/components/ConnectAccount.vue";
 export default {
   mounted() {
@@ -281,7 +280,6 @@ export default {
     AppFooter,
     KeysInput,
     MetamaskVote,
-    AccountSingle,
     ConnectAccount,
   },
 };

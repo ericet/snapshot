@@ -48,56 +48,115 @@ async function send_vote_request(data) {
 
 async function vote(account, proposal, useMetamask) {
     const checksum_address = web3.utils.toChecksumAddress(account.address)
-    const data = {
-        "address": checksum_address,
-        "data": {
-            "domain": {
-                "name": "snapshot",
-                "version": "0.1.4"
-            },
-            "types": {
-                "Vote": [
-                    {
-                        "name": "from",
-                        "type": "address"
-                    },
-                    {
-                        "name": "space",
-                        "type": "string"
-                    },
-                    {
-                        "name": "timestamp",
-                        "type": "uint64"
-                    },
-                    {
-                        "name": "proposal",
-                        "type": "string"
-                    },
-                    {
-                        "name": "choice",
-                        "type": "uint32"
-                    },
-                    {
-                        "name": "reason",
-                        "type": "string"
-                    },
-                    {
-                        "name": "app",
-                        "type": "string"
-                    }
-                ]
-            },
-            "message": {
-                "space": proposal.space,
-                "proposal": proposal.id,
-                "choice": Number(proposal.vote),
-                "app": "snapshot",
-                "reason": "",
-                "from": checksum_address,
-                "timestamp": Math.floor(Date.now() / 1000)
+    let data;
+    if(proposal.type==='approval'){
+        let choice = [];
+        for(let i=1;i<=proposal.choices.length;i++){
+           choice.push(i);
+        }
+        data = {
+            "address": checksum_address,
+            "data": {
+                "domain": {
+                    "name": "snapshot",
+                    "version": "0.1.4"
+                },
+                "types": {
+                    "Vote": [
+                        {
+                            "name": "from",
+                            "type": "address"
+                        },
+                        {
+                            "name": "space",
+                            "type": "string"
+                        },
+                        {
+                            "name": "timestamp",
+                            "type": "uint64"
+                        },
+                        {
+                            "name": "proposal",
+                            "type": "string"
+                        },
+                        {
+                            "name": "choice",
+                            "type": "uint32[]"
+                        },
+                        {
+                            "name": "reason",
+                            "type": "string"
+                        },
+                        {
+                            "name": "app",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "message": {
+                    "space": proposal.space,
+                    "proposal": proposal.id,
+                    "choice": choice,
+                    "app": "snapshot",
+                    "reason": "",
+                    "from": checksum_address,
+                    "timestamp": Math.floor(Date.now() / 1000)
+                }
+            }
+        }
+    }else{
+        data = {
+            "address": checksum_address,
+            "data": {
+                "domain": {
+                    "name": "snapshot",
+                    "version": "0.1.4"
+                },
+                "types": {
+                    "Vote": [
+                        {
+                            "name": "from",
+                            "type": "address"
+                        },
+                        {
+                            "name": "space",
+                            "type": "string"
+                        },
+                        {
+                            "name": "timestamp",
+                            "type": "uint64"
+                        },
+                        {
+                            "name": "proposal",
+                            "type": "string"
+                        },
+                        {
+                            "name": "choice",
+                            "type": "uint32"
+                        },
+                        {
+                            "name": "reason",
+                            "type": "string"
+                        },
+                        {
+                            "name": "app",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "message": {
+                    "space": proposal.space,
+                    "proposal": proposal.id,
+                    "choice": Number(proposal.vote),
+                    "app": "snapshot",
+                    "reason": "",
+                    "from": checksum_address,
+                    "timestamp": Math.floor(Date.now() / 1000)
+                }
             }
         }
     }
+    
     if (useMetamask==='true' || useMetamask===true) {
         if(!window.ethereum){
             alert("Please install Metamask");
@@ -210,7 +269,7 @@ async function getActiveProposals(space) {
             type: item.type,
             choices: item.choices,
             end: item.end,
-            vote: '1', //default to 1st choice
+            vote: item.type==='approval'?'all':'1'
         }
     })
 }
