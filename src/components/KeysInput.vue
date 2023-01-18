@@ -58,17 +58,9 @@ export default {
     getVoteWallet() {
       this.accounts = [];
       for (let key of this.keys) {
-        let proposals = [];
-        for (let proposal of this.proposals) {
-          proposals.push({
-            id: proposal.id,
-            vote: proposal.vote,
-            space: proposal.space,
-          });
-        }
         this.accounts.push({
           key: key,
-          proposals: proposals,
+          proposals: this.proposals,
         });
       }
     },
