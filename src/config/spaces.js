@@ -70,5 +70,9 @@ export const spacesList = [
     {
         id:"lido-snapshot.eth",
         name:"Lido"
-    }
+    },
+    {
+        id:"mail3.eth",
+        name:"Mail3"
+    },
 ];
