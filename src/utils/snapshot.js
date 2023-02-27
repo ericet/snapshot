@@ -49,7 +49,7 @@ async function send_vote_request(data) {
 async function vote(account, proposal, useMetamask) {
     const checksum_address = web3.utils.toChecksumAddress(account.address)
     let data;
-    if(proposal.type==='approval'){
+    if(proposal.type==='approval' || proposal.type==='ranked-choice'){
         let choice = [];
         for(let i=1;i<=proposal.choices.length;i++){
            choice.push(i);
@@ -104,7 +104,8 @@ async function vote(account, proposal, useMetamask) {
                 }
             }
         }
-    }else{
+    }
+    else{
         data = {
             "address": checksum_address,
             "data": {

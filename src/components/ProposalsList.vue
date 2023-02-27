@@ -237,7 +237,7 @@
               {{ getDate(proposal.end) }}
             </td>
             <td class="text-left">
-              <select v-if="proposal.type==='single-choice'"
+              <select v-if="proposal.type==='single-choice' || proposal.type==='basic'"
                 :value="proposal.vote"
                 class="text-left w-48 border-solid border-2 rounded-md"
                 @change.stop="change($event.target.value, proposal)"
@@ -251,6 +251,9 @@
                 </option>
               </select>
               <select v-if="proposal.type==='approval'" class="text-left w-48 border-solid border-2 rounded-md">
+                <option selected value="all">Vote for All</option>
+              </select>
+               <select v-if="proposal.type==='ranked-choice'" class="text-left w-48 border-solid border-2 rounded-md">
                 <option selected value="all">Vote for All</option>
               </select>
             </td>
