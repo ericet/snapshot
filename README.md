@@ -41,3 +41,9 @@ https://ericet.github.io/snapshot/
 
 ## A Special Thanks to liangfenxiaodao(刀哥), got ideas from his open source project: https://github.com/liangfenxiaodao/snapshot-voting
 
+如果你觉得脚本帮助到你，可以捐献一点心意。
+
+钱包地址：0x434DCffCF7dABd48B284860C27ebd184C91341F5, 各链通用. 
+
+微信:
+![b74e66a47e67b5b469bf896889f436d](https://user-images.githubusercontent.com/9066755/161464878-27fd65c0-ecc6-4e77-ae50-0cd166a07bac.jpg)
